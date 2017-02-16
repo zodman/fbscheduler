@@ -1,5 +1,8 @@
 {
     "require": {
         "mikecao/flight": "^1.3"
+    },
+    "require-dev": {
+        "yeriomin/redbean-single-file": "^4.3"
     }
 }

@@ -1,11 +1,11 @@
 <template>
     <div id="app" class="ui container">
         
-        <form class="ui form segment">
+        <form class="ui form segment" @submit.prevent="addNewURL">
             <div class="inline field">
                 <label for="New url"> Nueva  url</label>
                 <input type="text" placeholder="Nueva url" v-model="new_url">
-                <button type="button"> <i class="plus icon"/></button>
+                <button type="submit"> <i class="plus icon"/></button>
             </div>
 
         </form>
@@ -29,13 +29,23 @@ export default {
         urls:[],
     }
   },
+    methods: {
+        fetchALL() {
+             this.axios.get("/list/").then( resp => {
+                console.log("resp", resp);
+                this.urls= resp.data;
+            })
+        },
+        addNewURL() {
+            this.axios.post("/add/",{'url': this.new_url}).then(respo =>{
+                console.log("add", respo.data);
+                this.fetchALL();
+            });
+        }
+    },
   mounted() {
 
-        this.axios.get("/list/").then( resp => {
-            console.log("resp", resp);
-            this.urls= resp.data;
-        })
-    
+       this.fetchALL();    
   }
 }
 </script>
